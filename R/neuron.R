@@ -543,15 +543,24 @@ resample.neuron<-function(x, stepsize, ...) {
 
 #' Glue two SWC neurons together
 #' 
-#' @details Some tracing software / users save each branch of a neuron as a separate SWC file, which is incorrect and severely limits the functionality of nat when used with these files. This function provides a way to 'glue' these neuron branches back together into one SWC file, via a user-selection of a point from each neuron that should be joined together. This function assumes that the SWC files are completely unbranched, and will give erroneous results if used on SWC files that contain branches (unless the branch points are all lower down the tree than the selected glue point).
-#' 
+#' @details Some tracing software / users save each branch of a neuron as a
+#'   separate SWC file, which is incorrect and severely limits the functionality
+#'   of nat when used with these files. This function provides a way to 'glue'
+#'   these neuron branches back together into one SWC file, via a user-selection
+#'   of a point from each neuron that should be joined together. This function
+#'   assumes that the SWC files are completely unbranched, and will give
+#'   erroneous results if used on SWC files that contain branches (unless the
+#'   branch points are all lower down the tree than the selected glue point).
+#'   
 #' @param file1 path to first SWC file.
 #' @param file2 path to second SWC file.
 #' @param col1 colour to plot first neuron in.
 #' @param col2 colour to plot second neuron in.
-#' @param filepath if not \code{NULL}, the glued-together neuron will be saved in SWC format to this file path.
-#' 
-#' @return A \code{\link{neuron}} object representing the glued-together SWC files.
+#' @param filepath if not \code{NULL}, the glued-together neuron will be saved
+#'   in SWC format to this file path.
+#'   
+#' @return A \code{\link{neuron}} object representing the glued-together SWC
+#'   files.
 #' @export
 glue_swc <- function(file1, file2, col1="red", col2="blue", filepath=NULL) {
   n1 <- read.neuron(file1)
