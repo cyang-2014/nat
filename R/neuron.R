@@ -565,10 +565,8 @@ resample.neuron<-function(x, stepsize, ...) {
 glue_swc <- function(file1, file2, col1="red", col2="blue", filepath=NULL) {
   n1 <- read.neuron(file1)
   n2 <- read.neuron(file2)
-  swc1 <- read.csv(file1, sep=" ", skip=1, header=FALSE)
-  swc2 <- read.csv(file2, sep=" ", skip=1, header=FALSE)
-  colnames(swc1) <- c("PointNo", "Type", "X", "Y", "Z", "Width", "Parent")
-  colnames(swc2) <- c("PointNo", "Type", "X", "Y", "Z", "Width", "Parent")
+  swc1 <- n1$d
+  swc2 <- n2$d
   
   plot3d(n1, WithAllPoints=TRUE, WithNodes=TRUE, col=col1)
   plot3d(n2, WithAllPoints=TRUE, WithNodes=TRUE, col=col2)
@@ -583,11 +581,11 @@ glue_swc <- function(file1, file2, col1="red", col2="blue", filepath=NULL) {
   n2_pt <- which(s2(n2$d[, c('X', 'Y', 'Z')]))
   if(length(n2_pt) != 1) stop("One and only one point must be selected!")
   
-  if(!(n1_pt == 1)) {
+  if(n1_pt != 1) {
     swc1[swc1$PointNo < n1_pt, 'Parent'] <- swc1[swc1$PointNo < n1_pt, 'PointNo'] + 1
     swc1[swc1$PointNo == n1_pt, 'Parent'] <- -1
   }
-  if(!(n2_pt == 1)) {
+  if(n2_pt != 1) {
     swc2[swc2$PointNo < n2_pt, 'Parent'] <- swc2[swc2$PointNo < n2_pt, 'PointNo'] + 1
     swc2[swc2$PointNo == n2_pt, 'Parent'] <- -1
   }
