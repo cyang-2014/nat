@@ -597,8 +597,10 @@ glue_swc <- function(file1, file2, col1="red", col2="blue", filepath=NULL) {
   swc2$PointNo <- swc2$PointNo + nrow(swc1)
   
   swc <- rbind(swc1, swc2)
-  if(!is.null(filepath)) swc_file <- filepath
-  else swc_file <- tempfile()
-  write.table(swc, swc_file, sep=" ", row.names=FALSE, col.names=FALSE)
-  neuron <- read.neuron.swc(swc_file)    
+  if(is.null(filepath)) {
+    filepath <- tempfile()
+    on.exit(unlink(filepath))
+  }
+  write.table(swc, filepath, sep=" ", row.names=FALSE, col.names=FALSE)
+  neuron <- read.neuron.swc(filepath)
 }
